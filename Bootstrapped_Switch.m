@@ -86,7 +86,7 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     Cgs0 = 0.90E-15; % parasitic coefficient capacitors in triode region (F/um)
     Cgs = Cgs0 * W_des;
     Cgd = Cgs0 * W_des;
-    HD3_cap_track = getHD_Cap_Track(W_des/L,V0,CL,fmax, ...
+    HD3_cap_track = getHD3_Cap_Track(W_des/L,V0,CL,fmax, ...
         cb0_root,[Cp1, Cgs, Cgd]);
     if (HD3_cap_track > THD_Target)
         warning("Capacitive Division Failed!");

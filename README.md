@@ -14,7 +14,7 @@ J. Ma and Y. Hu, "Bootstrapped Switch Calculation Model," [Online]. Available: h
 ```
 
 <p align="center">
-  <img src="./image/p2.png" alt="Description" width="600">
+  <img src="https://github.com/MMurphy98/Bootstrapped-Switch-Model/blob/master/image/p2.png?raw=true" alt="Description" width="600">
 </p>
 
 
