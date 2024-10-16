@@ -115,8 +115,9 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     
     result.W = W_des;                       % unit: um
     result.Cb = cb0_root;                   % unit: F
-    result.HD3_tot = mag2db(sum([HD3_SD, ...% unit: dB
-        HD3_cap_switch,HD3_cap_track].^2));
+    result.HD3_tot = pow2db(sum([db2mag(HD3_SD), ...
+        db2mag(HD3_cap_switch),...
+        db2mag(HD3_cap_track)].^2));        % unit: dB
     result.HD3_SD = HD3_SD;                 % unit: dB
     result.HD3_cap_switch = HD3_cap_switch; % unit: dB
     result.HD3_cap_track = HD3_cap_track;   % unit: dB
