@@ -48,12 +48,13 @@ The running results are presented as follows:
 [r, size_array, cb_array] = Bootstrapped_Switch(Fin0, C1, V0, Target_THD)
 
 >>> r = 
-                 W: 12.2342
-                Cb: 1.9454e-13
-           HD3_tot: 89.1231
-            HD3_SD: -94
-    HD3_cap_switch: -93.5203
-     HD3_cap_track: -104.9005
+      W: 12.2342
+      Cb: 1.9454e-13
+      HD3_tot: -90.5796
+      HD3_SD: -94
+      HD3_cap_switch: -93.5203
+      HD3_cap_track: -104.9005
+
 
 >>> size_array = 
     Size_i: [1.2234 1.6978 2.1722 2.6466 3.1210 3.5954 4.0697 4.5441 5.0185 5.4929 5.9673 6.4417 6.9161 7.3905 7.8648 8.3392 8.8136 9.2880 9.7624 10.2368 10.7112 11.1856 11.6599 12.1343 12.6087 13.0831 13.5575 14.0319 14.5063 14.9807 … ] (1×50 double)
