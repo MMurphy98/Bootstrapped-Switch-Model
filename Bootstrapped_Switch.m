@@ -47,7 +47,8 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     W_des = size*L;                              % um
     
     Ron0_des = 1/(Kn*VOD*(W_des/L));
-    HD3_SD = getHD3_SDExchange(Ron0_des, V0, CL, fmax);
+    HD3_SD = getHD3_SDExchange(Ron0_des, V0, CL, fmax, ...
+        'VDD', VDD, 'VTH0', VTH0, 'alpha', alpha, 'Kn', Kn);
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %% Calculate the bootstrapped capacitor Cb
     Cp1 = 1.5E-14;              % Cp from gate to ground (F)
@@ -63,13 +64,15 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     while (cb0_upper - cb0_lower) / 2 > cb0_tol
         cb0_mid = mean([cb0_lower, cb0_upper]);
         hd3_mid = getHD3_Cap_Switch_para(W_des/L,V0,CL,fmax, ...
-            cb0_mid,Cp_array);
+            cb0_mid,Cp_array, ...
+            'VDD', VDD, 'VTH0', VTH0, 'Kn', Kn);
         if (hd3_mid == THD_Target)
             cb0_root = cb0_mid;
             return;
         else
             hd3_uppder = getHD3_Cap_Switch_para(W_des/L,V0,CL,fmax, ...
-                cb0_upper,Cp_array);
+                cb0_upper,Cp_array, ...
+                'VDD', VDD, 'VTH0', VTH0, 'Kn', Kn);
             if (hd3_mid-THD_Target) * (hd3_uppder-THD_Target) < 0
                 cb0_lower = cb0_mid;
             else
@@ -79,7 +82,8 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     end
     cb0_root = mean([cb0_lower, cb0_upper]);
     HD3_cap_switch = getHD3_Cap_Switch_para(W_des/L,V0,CL,fmax, ...
-        cb0_root,Cp_array);
+        cb0_root,Cp_array, ...
+        'VDD', VDD, 'VTH0', VTH0, 'Kn', Kn);
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %% Check the capacitive division
@@ -87,7 +91,8 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     Cgs = Cgs0 * W_des;
     Cgd = Cgs0 * W_des;
     HD3_cap_track = getHD3_Cap_Track(W_des/L,V0,CL,fmax, ...
-        cb0_root,[Cp1, Cgs, Cgd]);
+        cb0_root,[Cp1, Cgs, Cgd], ...
+        'VDD', VDD, 'VTH0', VTH0, 'Kn', Kn);
     if (HD3_cap_track > THD_Target)
         warning("Capacitive Division Failed!");
     end
@@ -102,9 +107,11 @@ function [result, Size_Array, Capacitor_Array] = Bootstrapped_Switch(fmax, CL, V
     HD3_Sweep_Cb = zeros(1,Sweep_Length);
     for i = 1:Sweep_Length
         HD3_Sweep_W(i) = getHD3_SDExchange(1/(Kn*VOD*(Sweep_W(i)/L)), ...
-            V0, CL, fmax);
+            V0, CL, fmax, ...
+           'VDD', VDD, 'VTH0', VTH0, 'alpha', alpha, 'Kn', Kn);
         HD3_Sweep_Cb(i) = getHD3_Cap_Switch_para(W_des/L,V0,CL,fmax,...
-            Sweep_Cb(i),Cp_array);
+            Sweep_Cb(i),Cp_array, ...
+            'VDD', VDD, 'VTH0', VTH0, 'Kn', Kn);
     end
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %% Output results
